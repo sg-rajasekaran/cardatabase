@@ -8,7 +8,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -16,7 +18,7 @@ import org.springframework.context.annotation.DependsOn;
 import java.util.Arrays;
 
 @SpringBootApplication
-public class CardatabaseApplication {
+public class CardatabaseApplication extends SpringBootServletInitializer {
 	@Autowired
 	private CarRepository repository;
 	@Autowired
@@ -25,6 +27,11 @@ public class CardatabaseApplication {
 	private UserRepository urepository;
 
 	private static final Logger logger = LoggerFactory.getLogger(CardatabaseApplication.class);
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(CardatabaseApplication.class);
+	}
 	public static void main(String[] args) {
 		SpringApplication.run(CardatabaseApplication.class, args);
 		logger.info("Hello SpringBoot");
